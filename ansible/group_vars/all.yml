@@ -422,6 +422,9 @@ nova_serialproxy_fqdn: "{{ kolla_external_fqdn }}"
 nova_serialproxy_port: "6083"
 nova_serialproxy_listen_port: "{{ nova_serialproxy_port }}"
 nova_serialproxy_protocol: "{{ 'wss' if kolla_enable_tls_external | bool else 'ws' }}"
+nova_mksproxy_url: "{{ kolla_external_fqdn }}"
+nova_mksproxy_port: "6090"
+nova_mksproxy_listen_port: "{{ nova_mksproxy_port }}"
 
 octavia_internal_fqdn: "{{ kolla_internal_fqdn }}"
 octavia_external_fqdn: "{{ kolla_external_fqdn }}"
@@ -1026,7 +1029,7 @@ nova_backend: "{{ 'rbd' if nova_backend_ceph | bool else 'default' }}"
 nova_compute_virt_type: "kvm"
 nova_instance_datadir_volume: "nova_compute"
 nova_safety_upgrade: "no"
-# Valid options are [ none, novnc, spice ]
+# Valid options are [ none, novnc, spice, mks ]
 nova_console: "novnc"
 
 #######################

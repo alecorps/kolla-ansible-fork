@@ -125,3 +125,39 @@
             backend_http_extra:
               - "timeout tunnel {{ haproxy_nova_serialconsole_proxy_tunnel_timeout }}"
   tags: always
+
+- import_tasks: proxy_loadbalancer.yml
+  vars:
+    # Default is necessary because this play may not be targetting the hosts in
+    # the nova-mksproxy group, and therefore they would not have role
+    # defaults defined. If we put these variables in group_vars, then they
+    # cannot be overridden by the inventory.
+    cell_proxy_groups: >-
+      {{ groups['nova-mksproxy'] |
+         map('extract', hostvars, 'nova_cell_mksproxy_group') |
+         map('default', 'nova-mksproxy') |
+         unique |
+         list }}
+    cell_proxy_service_name: nova-mksproxy
+    cell_proxy_project_services:
+      nova-mksproxy:
+        group: "{{ nova_cell_mksproxy_group }}"
+        enabled: "{{ hostvars[groups[cell_proxy_group][0]]['nova_console'] == 'mks' }}"
+        haproxy:
+          nova_mksproxy:
+            enabled: "{{ hostvars[groups[cell_proxy_group][0]]['nova_console'] == 'mks' }}"
+            mode: "http"
+            external: false
+            port: "{{ hostvars[groups[cell_proxy_group][0]]['nova_mksproxy_port'] }}"
+            listen_port: "{{ hostvars[groups[cell_proxy_group][0]]['nova_mksproxy_listen_port'] }}"
+            backend_http_extra:
+              - "timeout tunnel {{ haproxy_nova_mksproxy_tunnel_timeout }}"
+          nova_mksproxy_external:
+            enabled: "{{ hostvars[groups[cell_proxy_group][0]]['nova_console'] == 'mks' }}"
+            mode: "http"
+            external: true
+            port: "{{ hostvars[groups[cell_proxy_group][0]]['nova_mksproxy_port'] }}"
+            listen_port: "{{ hostvars[groups[cell_proxy_group][0]]['nova_mksproxy_listen_port'] }}"
+            backend_http_extra:
+              - "timeout tunnel {{ haproxy_nova_mksproxy_tunnel_timeout }}"
+  tags: always

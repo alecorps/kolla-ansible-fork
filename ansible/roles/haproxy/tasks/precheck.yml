@@ -658,6 +658,20 @@
     - haproxy_stat.find('nova_spicehtml5proxy') == -1
     - haproxy_vip_prechecks
 
+- name: Checking free port for Nova MKS HAProxy
+  wait_for:
+    host: "{{ kolla_internal_vip_address }}"
+    port: "{{ nova_mksproxy_port }}"
+    connect_timeout: 1
+    timeout: 1
+    state: stopped
+  when:
+    - enable_nova | bool
+    - nova_console == 'mks'
+    - inventory_hostname in groups['haproxy']
+    - haproxy_stat.find('nova_mksproxy') == -1
+    - haproxy_vip_prechecks
+
 - name: Checking free port for Nova Placement API HAProxy
   wait_for:
     host: "{{ kolla_internal_vip_address }}"

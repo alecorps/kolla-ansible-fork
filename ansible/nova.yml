@@ -17,6 +17,7 @@
 # * nova-conductor
 # * nova-libvirt
 # * nova-novncproxy
+# * nova-mksproxy
 # * nova-serialproxy
 # * nova-spicehtml5proxy
 # * nova-ssh
@@ -121,6 +122,7 @@
     - nova-compute-ironic
     - nova-conductor
     - nova-novncproxy
+    - nova-mksproxy
     - nova-serialproxy
     - nova-spicehtml5proxy
     - '&enable_nova_True'
@@ -187,6 +189,7 @@
     - nova-compute-ironic
     - nova-conductor
     - nova-novncproxy
+    - nova-mksproxy
     - nova-serialproxy
     - nova-spicehtml5proxy
     - '&enable_nova_True'

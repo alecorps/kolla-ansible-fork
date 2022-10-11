@@ -13,6 +13,7 @@
       - nova_novncproxy
       - nova_serialproxy
       - nova_spicehtml5proxy
+      - nova_mksproxy
       - nova_ssh
   register: container_facts
 
@@ -67,6 +68,20 @@
     - container_facts['nova_spicehtml5proxy'] is not defined
     - nova_spicehtml5proxy.enabled | bool
     - inventory_hostname in groups[nova_spicehtml5proxy.group]
+
+- name: Checking free port for Nova Mks Proxy
+  vars:
+    nova_mksproxy: "{{ nova_cell_services['nova-mksproxy'] }}"
+  wait_for:
+    host: "{{ api_interface_address }}"
+    port: "{{ nova_mksproxy_listen_port }}"
+    connect_timeout: 1
+    timeout: 1
+    state: stopped
+  when:
+    - container_facts['nova_mksproxy'] is not defined
+    - nova_mksproxy.enabled | bool
+    - inventory_hostname in groups[nova_mksproxy.group]
 
 - name: Checking free port for Nova SSH (API interface)
   vars:

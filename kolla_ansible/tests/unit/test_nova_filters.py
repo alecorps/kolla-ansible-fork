@@ -168,6 +168,12 @@ class TestFilters(unittest.TestCase):
                     'nova_spicehtml5proxy': {},
                     'nova_spicehtml5proxy_external': {}
                 }
+            },
+            'nova-mksproxy': {
+                'haproxy': {
+                    'nova_mksproxy': {},
+                    'nova_mksproxy_external': {}
+                }
             }
         }
         actual = filters.namespace_haproxy_for_cell(
@@ -183,6 +189,12 @@ class TestFilters(unittest.TestCase):
                 'haproxy': {
                     'nova_spicehtml5proxy_cell0002': {},
                     'nova_spicehtml5proxy_external_cell0002': {}
+                }
+            },
+            'nova-mksproxy_cell0002': {
+                'haproxy': {
+                    'nova_mksproxy_cell0002': {},
+                    'nova_mksproxy_external_cell0002': {}
                 }
             }
         }

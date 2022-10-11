@@ -298,6 +298,9 @@ nova
 [nova-novncproxy:children]
 nova
 
+[nova-mksproxy:children]
+nova
+
 [nova-scheduler:children]
 nova
 

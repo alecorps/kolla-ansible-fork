@@ -572,7 +572,7 @@
 # new version. And opposite.
 #nova_safety_upgrade: "no"
 
-# Valid options are [ none, novnc, spice ]
+# Valid options are [ none, novnc, spice, mks ]
 #nova_console: "novnc"
 
 ##############################

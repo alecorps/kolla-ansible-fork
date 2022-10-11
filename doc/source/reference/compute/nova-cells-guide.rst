@@ -34,6 +34,7 @@ Per-cell control services:
 * ``nova-novncproxy``
 * ``nova-serialproxy``
 * ``nova-spicehtml5proxy``
+* ``nova-mksproxy``
 
 Per-cell compute services:
 
@@ -195,6 +196,7 @@ the placement of services:
 * ``nova-novncproxy``: ``nova-novncproxy``
 * ``nova-serialproxy``: ``nova-serialproxy``
 * ``nova-spicehtml5proxy``: ``nova-spicehtml5proxy``
+* ``nova-mksproxy``: ``nova-mksproxy``
 
 In a multi-cell deployment, this is still necessary - compute hosts must be in
 the ``compute`` group. However, to provide further control over where cell
@@ -205,7 +207,7 @@ services are placed, the following variables are used:
 * ``nova_cell_conductor_group``
 * ``nova_cell_novncproxy_group``
 * ``nova_cell_serialproxy_group``
-* ``nova_cell_spicehtml5proxy_group``
+* ``nova_cell_mksproxy_group``
 
 For backwards compatibility, these are set by default to the original group
 names.  For a multi-cell deployment, they should be set to the name of a group
@@ -234,6 +236,10 @@ Inventory:
    cell-control-cell2
 
    [nova-spicehtml5proxy:children]
+   cell-control-cell1
+   cell-control-cell2
+
+   [nova-mksproxy:children]
    cell-control-cell1
    cell-control-cell2
 
@@ -273,6 +279,7 @@ Cell1 group variables (``group_vars/cell1``):
    nova_cell_novncproxy_group: cell-control-cell1
    nova_cell_serialproxy_group: cell-control-cell1
    nova_cell_spicehtml5proxy_group: cell-control-cell1
+   nova_cell_mksproxy_group: cell-control-cell1
 
 Cell2 group variables (``group_vars/cell2``):
 
@@ -284,6 +291,7 @@ Cell2 group variables (``group_vars/cell2``):
    nova_cell_novncproxy_group: cell-control-cell2
    nova_cell_serialproxy_group: cell-control-cell2
    nova_cell_spicehtml5proxy_group: cell-control-cell2
+   nova_cell_mksproxy_group: cell-control-cell2
 
 Note that these example cell group variables specify groups for all console
 proxy services for completeness. You will need to ensure that there are no
@@ -357,6 +365,7 @@ configured via the following variables:
 
 * ``nova_novncproxy_port``
 * ``nova_spicehtml5proxy_port``
+* ``nova_mksproxy_port``
 * ``nova_serialproxy_port``
 
 Ironic
